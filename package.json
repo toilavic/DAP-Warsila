@@ -7,7 +7,9 @@
     "build": "tsc -p ./",
     "start": "npm run build && node ./dist/index.js",
     "dev": "nodemon dist/index.js",
-    "watch": "tsc -w"
+    "watch": "tsc -w",
+    "tsc": "tsc",
+    "postinstall": "npm run tsc"
   },
   "keywords": [],
   "author": "",
