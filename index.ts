@@ -54,5 +54,5 @@ io.on("connection", (socket) => {
 app.use(router)
 
 serverSocket.listen(configs.port || 4000, () => {
-	logger.info(`Server is running at https://localhost:${configs.port}`)
+	logger.info(`Server is running on PORT: ${configs.port}`)
 })

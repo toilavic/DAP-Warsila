@@ -3,6 +3,6 @@ export interface IConfig {
     influxToken: string,
     influxOrg: string,
     influxBucket: string,
-    port: number,
+    port: any,
     env: string
 }

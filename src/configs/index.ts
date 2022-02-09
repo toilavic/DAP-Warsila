@@ -4,7 +4,7 @@ import production from './production'
 import { IConfig } from '../interface'
 
 const defaults = {
-    port : 4000,
+    port : process.env.PORT || 4000,
     env : process.env.NODE_ENV || 'development',
 }
 
