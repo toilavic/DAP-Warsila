@@ -3,6 +3,11 @@ import logger from '../utils/logger'
 
 const router = express.Router()
 
+router.get('/', (req: Request, res: Response) => {
+    const whatToSend = process.env.NODE_ENV === 'production' ? 'https://wui.nome.fi' : 'http://localhost:3000'
+    res.send(whatToSend)
+})
+
 router.get('/get_settings', (req: Request, res: Response) => {
     res.status(200).json({
         timeoutDataRenewal: req.app.locals.timeoutDataRenewal,
