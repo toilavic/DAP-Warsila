@@ -6,15 +6,14 @@ import configs from "../configs"
 
 const queryApi = new InfluxDB({ url: configs.influxURL, token: configs.influxToken }).getQueryApi(configs.influxOrg)
 
-export const socketPipelinesCreation = (socketServer, socketName, measurement?: string, field?: string, topic?: string ) => {
+export const socketPipelinesCreation = (socketServer, socketName, measurement?: string, field?: string, topic?: string, timeToGetDataFrom?: string) => {
     const _measurement = measurement || 'data'
 	const _field = field || 'val' // val 
 	let response
 	let result = []
 
-	// Single gauges with in 1 minute ago (Latest value)
 	// Todo: API to change the query params? power or speed, val, avg.....
- 	queryApi.queryRows(query('-30m', _measurement, _field, topic, 'mean'), {
+ 	queryApi.queryRows(query(timeToGetDataFrom, _measurement, _field, topic, 'mean'), {
 		next(row: string[], tableMeta: FluxTableMetaData) {
 			result.push(tableMeta.toObject(row))
 			response = result

@@ -24,6 +24,7 @@ app.use(bodyParser.json())
 app.locals.timeoutDataRenewal = 30000
 app.locals.measurement = 'data'
 app.locals.availableMeasurements = JSON.parse(process.env.AVAILABLE_MEASUREMENTS)
+app.locals.timeToGetDataFrom = '-30m' // 30 minute ago
 
 const serverSocket = http.createServer(app)
 // Socket IO
@@ -38,12 +39,12 @@ let interval
 io.on("connection", (socket) => {
 	logger.info("Socket connect successfully !")
 
-	socketPipelineSetup(socket, app.locals.measurement)
+	socketPipelineSetup(socket, app.locals.measurement, app.locals.timeToGetDataFrom)
 	
 	if (interval) clearInterval(interval)
 	// Todo: Set time our API setting for user
 	interval = setInterval(() => {
-		socketPipelineSetup(socket, app.locals.measurement)
+		socketPipelineSetup(socket, app.locals.measurement, app.locals.timeToGetDataFrom)
 	}, app.locals.timeoutDataRenewal)
 	socket.on("disconnect", () => {
 		logger.info("Client disconnected")
